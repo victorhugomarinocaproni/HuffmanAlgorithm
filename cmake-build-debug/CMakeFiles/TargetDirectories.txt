@@ -1,3 +1,3 @@
-C:/Users/VH-working/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug/CMakeFiles/huffman.dir
-C:/Users/VH-working/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/VH-working/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/victo/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug/CMakeFiles/huffman.dir
+C:/Users/victo/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/victo/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug/CMakeFiles/rebuild_cache.dir

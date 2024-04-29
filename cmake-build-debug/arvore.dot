@@ -1,0 +1,19 @@
+digraph HuffmanTree {
+  0000022ee6d56d30 [label="ÿ:5"];
+  0000022ee6d56d30 -> 0000022ee6d56d50 [label="esquerda"];
+  0000022ee6d56d50 [label="ÿ:2"];
+  0000022ee6d56d50 -> 0000022ee6d56cd0 [label="esquerda"];
+  0000022ee6d56cd0 [label="c:1"];
+  0000022ee6d56d50 -> 0000022ee6d56cf0 [label="direita"];
+  0000022ee6d56cf0 [label="d:1"];
+  0000022ee6d56d30 -> 0000022ee6d56d90 [label="direita"];
+  0000022ee6d56d90 [label="ÿ:3"];
+  0000022ee6d56d90 -> 0000022ee6d56d10 [label="esquerda"];
+  0000022ee6d56d10 [label="e:1"];
+  0000022ee6d56d90 -> 0000022ee6d56dd0 [label="direita"];
+  0000022ee6d56dd0 [label="ÿ:2"];
+  0000022ee6d56dd0 -> 0000022ee6d56c90 [label="esquerda"];
+  0000022ee6d56c90 [label="a:1"];
+  0000022ee6d56dd0 -> 0000022ee6d56cb0 [label="direita"];
+  0000022ee6d56cb0 [label="b:1"];
+}
