@@ -121,17 +121,20 @@ static void mostra_lista_de_prioridade(Lista_de_prioridade *lista) {
 
     printf("qtdElementos: %d\n", lista->qtdElementos);
     Node_de_lista_de_prioridade *node_atual = lista->primeiro_node;
+    int posicao = 1;
 
     while (node_atual != NULL) {
-        printf("Byte: %d, qtdReps: %d\n",
+        printf("Posicao: %d Byte: %d, qtdReps: %d\n",
+               posicao,
                node_atual->node_de_arvore_pointer->byte,
                node_atual->node_de_arvore_pointer->qtdRepeticoes);
         node_atual = node_atual->next_node;
+        posicao++;
     }
 }
 
 int main(void) {
-    FILE *compactFile = fopen("C:\\Users\\victo\\Desktop\\huffman\\file_compressor_and_decompressor\\teste.txt", "rb+");
+    FILE *compactFile = fopen("C:\\Users\\VH-working\\Desktop\\huffman\\file_compressor_and_decompressor\\texto.txt", "rb+");
 
     if (compactFile == NULL) {
         printf("Erro ao encontrar arquivo para compactar");
@@ -174,6 +177,8 @@ int main(void) {
         Node_de_arvore* raiz = lista_prioridade.primeiro_node->node_de_arvore_pointer;
 
         printf("=========================\n");
+        printf("Post-order\n");
         percorre_arvore_em_pos_ordem(raiz);
+
     }
 }
