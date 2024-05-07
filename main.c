@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct Node_de_arvore {
     char byte;
+    char *novoBinario;
     int qtdRepeticoes;
     struct Node_de_arvore *esquerda;
     struct Node_de_arvore *direita;
@@ -22,6 +24,7 @@ typedef struct {
 static Node_de_arvore *cria_node_de_arvore(unsigned int byte) {
     Node_de_arvore *novo_node = (Node_de_arvore *) malloc(sizeof(Node_de_arvore));
     novo_node->byte = byte;
+    novo_node->novoBinario = "0";
     novo_node->qtdRepeticoes = 1;
     novo_node->esquerda = NULL;
     novo_node->direita = NULL;
@@ -108,13 +111,22 @@ static void monta_huffman_tree(Lista_de_prioridade *lista) {
     }
 }
 
-static void percorre_arvore_em_pos_ordem(Node_de_arvore* raiz) {
+static void printa_arvore_em_pos_ordem(Node_de_arvore* raiz) {
     if(raiz == NULL) return;
 
-    percorre_arvore_em_pos_ordem(raiz->esquerda);
-    percorre_arvore_em_pos_ordem(raiz->direita);
+    printa_arvore_em_pos_ordem(raiz->esquerda);
+    printa_arvore_em_pos_ordem(raiz->direita);
 
     printf("Byte: %d - Content: %d\n", raiz->byte, raiz->qtdRepeticoes);
+}
+
+static void mostra_novos_valores_binarios_de_cada_byte(Node_de_arvore* raiz) { // erro aqui!!!!
+    if(raiz == NULL) return;
+
+    mostra_novos_valores_binarios_de_cada_byte(raiz->esquerda);
+    mostra_novos_valores_binarios_de_cada_byte(raiz->direita);
+
+    printf("Byte: %d - Novo Binario: %s\n", raiz->byte, raiz->novoBinario);
 }
 
 static void mostra_lista_de_prioridade(Lista_de_prioridade *lista) {
@@ -133,8 +145,64 @@ static void mostra_lista_de_prioridade(Lista_de_prioridade *lista) {
     }
 }
 
+static int calcula_altura_da_arvore(Node_de_arvore* raiz) {
+    if(raiz == NULL) {
+        return 0;
+    }
+
+    int alturaEsquerda = calcula_altura_da_arvore(raiz->esquerda);
+    int alturaDireita = calcula_altura_da_arvore(raiz->direita);
+
+    if(alturaEsquerda > alturaDireita) {
+        return alturaEsquerda += 1;
+    }
+    else {
+        return alturaDireita += 1;
+    }
+
+}
+
+static void monta_novos_codigos_binarios(Node_de_arvore* raiz, char *binario_cache) {
+    if(raiz == NULL) return;
+
+    if(raiz->esquerda != NULL) {
+        strcat(binario_cache, "0");
+    }
+
+    monta_novos_codigos_binarios(raiz->esquerda, binario_cache);
+
+    if(raiz->direita != NULL) {
+        strcat(binario_cache, "1");
+    }
+
+    monta_novos_codigos_binarios(raiz->direita, binario_cache);
+
+    int tamanho = strlen(binario_cache);
+
+    if(raiz->esquerda == NULL && raiz->direita == NULL) {
+        raiz->novoBinario = malloc((tamanho+1) * sizeof(char));
+        strcpy(raiz->novoBinario, binario_cache);
+    }
+
+    binario_cache[tamanho-1] = '\0';
+
+}
+
+static void monta_array_novos_codigos_binarios_montados(Node_de_arvore* raiz, Node_de_arvore *array[]) {
+    if(raiz == NULL) return;
+
+    monta_array_novos_codigos_binarios_montados(raiz->esquerda, array);
+
+    monta_array_novos_codigos_binarios_montados(raiz->direita, array);
+
+    if(raiz->esquerda == NULL && raiz->direita == NULL) {
+        array[raiz->byte] = raiz;
+    }
+}
+
+
 int main(void) {
-    FILE *compactFile = fopen("C:\\Users\\VH-working\\Desktop\\huffman\\file_compressor_and_decompressor\\texto.txt", "rb+");
+    FILE *compactFile = fopen("C:\\Users\\victo\\Desktop\\huffman\\file_compressor_and_decompressor\\texto.txt", "rb+");
 
     if (compactFile == NULL) {
         printf("Erro ao encontrar arquivo para compactar");
@@ -171,6 +239,7 @@ int main(void) {
                 incrementa_nmr_elementos_lista_prioridade(&lista_prioridade);
             }
         }
+        printf("=========================\n");
         mostra_lista_de_prioridade(&lista_prioridade);
         monta_huffman_tree(&lista_prioridade);
 
@@ -178,7 +247,23 @@ int main(void) {
 
         printf("=========================\n");
         printf("Post-order\n");
-        percorre_arvore_em_pos_ordem(raiz);
+        printa_arvore_em_pos_ordem(raiz);
+        printf("=========================\n");
+        printf("Altura da Arvore: %d\n", calcula_altura_da_arvore(raiz));
+        printf("=========================\n");
+
+        char binarioCache[calcula_altura_da_arvore(raiz)];
+        binarioCache[0] = '\0';
+
+        monta_novos_codigos_binarios(raiz, binarioCache);
+        mostra_novos_valores_binarios_de_cada_byte(raiz);
+        printf("=========================\n");
+
+
+        Node_de_arvore* bytes_com_binarios_montados[256] = {NULL};
+
+        monta_array_novos_codigos_binarios_montados(raiz, bytes_com_binarios_montados);
+
 
     }
 }

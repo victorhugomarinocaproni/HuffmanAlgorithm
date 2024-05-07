@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/VH-working/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug",
-		"source" : "C:/Users/VH-working/Desktop/huffman/file_compressor_and_decompressor"
+		"build" : "C:/Users/victo/Desktop/huffman/file_compressor_and_decompressor/cmake-build-debug",
+		"source" : "C:/Users/victo/Desktop/huffman/file_compressor_and_decompressor"
 	},
 	"version" : 
 	{
